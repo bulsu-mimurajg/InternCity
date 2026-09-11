@@ -34,7 +34,7 @@ export default function Profile({
                 <Heading
                     variant="small"
                     title="Profile"
-                    description="Update your name and email address"
+                    description="Update your username and email address"
                 />
 
                 <Form
@@ -52,16 +52,16 @@ export default function Profile({
                                 <Input
                                     id="name"
                                     className="mt-1 block w-full"
-                                    defaultValue={auth.user.name}
-                                    name="name"
+                                    defaultValue={auth.user.username}
+                                    name="username"
                                     required
-                                    autoComplete="name"
-                                    placeholder="Full name"
+                                    autoComplete="username"
+                                    placeholder="Username"
                                 />
 
                                 <InputError
                                     className="mt-2"
-                                    message={errors.name}
+                                    message={errors.username}
                                 />
                             </div>
 

@@ -1,6 +1,11 @@
+import {LucideIcon} from "lucide-react";
+
 export type User = {
     id: number;
-    name: string;
+    username: string;
+    first_name: string;
+    middle_name: string;
+    last_name: string;
     email: string;
     avatar?: string;
     email_verified_at: string | null;
@@ -12,6 +17,7 @@ export type User = {
 
 export type Auth = {
     user: User;
+    role: 'admin' | 'hte' | 'adviser' | 'student';
 };
 
 export type Passkey = {

@@ -25,7 +25,10 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'username' => fake()->userName(),
+            'first_name' => fake()->firstName(),
+            'middle_name' => fake()->lastName(),
+            'last_name' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
@@ -34,6 +37,34 @@ class UserFactory extends Factory
             'two_factor_recovery_codes' => null,
             'two_factor_confirmed_at' => null,
         ];
+    }
+
+    public function admin(): static
+    {
+        return $this->afterCreating(function (User $user) {
+            $user->assignRole('admin');
+        });
+    }
+
+    public function hte(): static
+    {
+        return $this->afterCreating(function (User $user) {
+            $user->assignRole('hte');
+        });
+    }
+
+    public function adviser(): static
+    {
+        return $this->afterCreating(function (User $user) {
+            $user->assignRole('adviser');
+        });
+    }
+
+    public function student(): static
+    {
+        return $this->afterCreating(function (User $user) {
+            $user->assignRole('student');
+        });
     }
 
     /**

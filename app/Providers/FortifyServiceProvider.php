@@ -4,15 +4,20 @@ namespace App\Providers;
 
 use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
+use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
+use Laravel\Fortify\Contracts\LoginResponse;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Fortify;
+use Laravel\Fortify\Http\Requests\LoginRequest;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -21,7 +26,31 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->instance(LoginResponse::class, new class implements LoginResponse
+        {
+            public function toResponse($request)
+            {
+                $user = $request->user();
+
+                if ($user->hasRole('admin')) {
+                    return redirect()->intended(route('AdminDashboard'));
+                }
+
+                if ($user->hasRole('hte')) {
+                    return redirect()->intended(route('HteDashboard'));
+                }
+
+                if ($user->hasRole('adviser')) {
+                    return redirect()->intended(route('AdviserDashboard'));
+                }
+
+                if ($user->hasRole('student')) {
+                    return redirect()->intended(route('StudentDashboard'));
+                }
+
+                return redirect()->route('welcome');
+            }
+        });
     }
 
     /**
@@ -32,6 +61,39 @@ class FortifyServiceProvider extends ServiceProvider
         $this->configureActions();
         $this->configureViews();
         $this->configureRateLimiting();
+
+        Fortify::authenticateUsing(function (Request $request) {
+            Log::info('Login attempt', $request->all());
+
+            $user = User::where('username', $request->username)->first();
+
+            if (! $user) {
+                Log::info('User not found');
+
+                return null;
+            }
+
+            if (! Hash::check($request->password, $user->password)) {
+                Log::info('Wrong password');
+
+                return null;
+            }
+
+            return $user;
+        });
+
+        $this->app->bind(LoginRequest::class, function ($app) {
+            return new class extends LoginRequest
+            {
+                public function rules()
+                {
+                    return [
+                        'username' => ['required', 'string'],
+                        'password' => ['required', 'string'],
+                    ];
+                }
+            };
+        });
     }
 
     /**
