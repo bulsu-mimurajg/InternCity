@@ -1,8 +1,8 @@
 import {Link, usePage} from '@inertiajs/react';
 import {
-    BookOpen, BriefcaseBusinessIcon, CalendarIcon, ChartNoAxesColumnIcon, Check, FolderGit2,
+    BriefcaseBusinessIcon, CalendarIcon, ChartNoAxesColumnIcon, Check,
     GavelIcon,
-    GraduationCapIcon, InfoIcon, LayoutGrid, MonitorCogIcon, NotepadTextIcon, PlusIcon, PrinterIcon, SquareLibraryIcon,
+    GraduationCapIcon, InfoIcon, MonitorCogIcon, NotepadTextIcon, PlusIcon, PrinterIcon, SquareLibraryIcon,
     StepBackIcon,
     UserRoundIcon,
     UsersIcon
@@ -20,7 +20,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { AdminDashboard } from '@/routes';
+import { home } from '@/routes';
 import type { NavItem, NavGroup } from '@/types';
 
 let roleBasedNav: Record<string, { main: NavItem[]; groups?: NavGroup[]; footer: NavItem[] }>;
@@ -154,7 +154,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href={AdminDashboard()} prefetch>
+                            <Link href={home()} prefetch>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>
