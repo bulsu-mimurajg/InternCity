@@ -47,10 +47,10 @@ export default function Profile({
                     {({ processing, errors }) => (
                         <>
                             <div className="grid gap-2">
-                                <Label htmlFor="name">Name</Label>
+                                <Label htmlFor="username">Username</Label>
 
                                 <Input
-                                    id="name"
+                                    id="username"
                                     className="mt-1 block w-full"
                                     defaultValue={auth.user.username}
                                     name="username"

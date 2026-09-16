@@ -1,8 +1,13 @@
 <?php
 
 use App\Models\User;
+use Database\Seeders\RolePermissonSeeder;
 use Illuminate\Support\Facades\RateLimiter;
 use Laravel\Fortify\Features;
+
+beforeEach(function () {
+    $this->seed(RolePermissonSeeder::class);
+});
 
 test('login screen can be rendered', function () {
     $response = $this->get(route('login'));
@@ -11,15 +16,15 @@ test('login screen can be rendered', function () {
 });
 
 test('users can authenticate using the login screen', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->student()->create();
 
     $response = $this->post(route('login.store'), [
-        'email' => $user->email,
+        'username' => $user->username,
         'password' => 'password',
     ]);
 
     $this->assertAuthenticated();
-    $response->assertRedirect(route('dashboard', absolute: false));
+    $response->assertRedirect(route('StudentDashboard', absolute: false));
 });
 
 test('users with two factor enabled are redirected to two factor challenge', function () {
@@ -33,7 +38,7 @@ test('users with two factor enabled are redirected to two factor challenge', fun
     $user = User::factory()->withTwoFactor()->create();
 
     $response = $this->post(route('login'), [
-        'email' => $user->email,
+        'username' => $user->username,
         'password' => 'password',
     ]);
 
