@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Responses;
-use \Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
+
+use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 use Symfony\Component\HttpFoundation\Response;
 
 class LoginResponse implements LoginResponseContract
@@ -20,6 +21,7 @@ class LoginResponse implements LoginResponseContract
             $user->hasRole('student') => route('StudentDashboard', absolute: false),
             default => route('home', absolute: false)
         };
+
         return redirect()->intended($redirect);
     }
 }

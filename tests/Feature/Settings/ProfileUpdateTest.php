@@ -14,9 +14,9 @@ test('profile page is displayed', function () {
 
 test('profile information can be updated', function () {
     $user = User::factory()->create([
-            'username' => 'jaden',
-            'email' => 'jaden@example.com'
-        ]);
+        'username' => 'jaden',
+        'email' => 'jaden@example.com',
+    ]);
 
     $response = $this
         ->actingAs($user)

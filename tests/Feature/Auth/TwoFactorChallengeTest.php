@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\User;
-use Database\Seeders\RolePermissonSeeder;
 use Inertia\Testing\AssertableInertia as Assert;
 use Laravel\Fortify\Features;
 

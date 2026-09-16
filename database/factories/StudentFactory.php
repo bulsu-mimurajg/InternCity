@@ -44,7 +44,7 @@ class StudentFactory extends Factory
             return [
                 'user_id' => User::factory()->student()->state([
                     'username' => 'clairo',
-                    'email' => 'clairo@example.com'
+                    'email' => 'clairo@example.com',
                 ]),
             ];
         });

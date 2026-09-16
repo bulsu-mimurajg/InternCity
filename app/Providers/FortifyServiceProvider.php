@@ -29,31 +29,31 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-//        $this->app->instance(LoginResponse::class, new class implements LoginResponse
-//        {
-//            public function toResponse($request)
-//            {
-//                $user = $request->user();
-//
-//                if ($user->hasRole('admin')) {
-//                    return redirect()->intended(route('AdminDashboard'));
-//                }
-//
-//                if ($user->hasRole('hte')) {
-//                    return redirect()->intended(route('HteDashboard'));
-//                }
-//
-//                if ($user->hasRole('adviser')) {
-//                    return redirect()->intended(route('AdviserDashboard'));
-//                }
-//
-//                if ($user->hasRole('student')) {
-//                    return redirect()->intended(route('StudentDashboard'));
-//                }
-//
-//                return redirect()->route('home');
-//            }
-//        });
+        //        $this->app->instance(LoginResponse::class, new class implements LoginResponse
+        //        {
+        //            public function toResponse($request)
+        //            {
+        //                $user = $request->user();
+        //
+        //                if ($user->hasRole('admin')) {
+        //                    return redirect()->intended(route('AdminDashboard'));
+        //                }
+        //
+        //                if ($user->hasRole('hte')) {
+        //                    return redirect()->intended(route('HteDashboard'));
+        //                }
+        //
+        //                if ($user->hasRole('adviser')) {
+        //                    return redirect()->intended(route('AdviserDashboard'));
+        //                }
+        //
+        //                if ($user->hasRole('student')) {
+        //                    return redirect()->intended(route('StudentDashboard'));
+        //                }
+        //
+        //                return redirect()->route('home');
+        //            }
+        //        });
     }
 
     /**
@@ -66,7 +66,6 @@ class FortifyServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
         $this->app->singleton(VerifyEmailResponseContract::class, VerifyEmailResponse::class);
         $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
-
 
         Fortify::authenticateUsing(function (Request $request) {
             Log::info('Login attempt', $request->all());

@@ -2,10 +2,7 @@
     "mcpServers": {
         "laravel-boost": {
             "command": "C:\\xampp\\php\\php.exe",
-            "args": [
-                "E:\\Trojan Her\\InternCity\\artisan",
-                "boost:mcp"
-            ]
+            "args": ["E:\\Trojan Her\\InternCity\\artisan", "boost:mcp"]
         }
     }
 }

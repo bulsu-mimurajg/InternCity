@@ -12,6 +12,4 @@ class Student extends Model
 {
     /** @use HasFactory<StudentFactory> */
     use HasFactory;
-
-
 }

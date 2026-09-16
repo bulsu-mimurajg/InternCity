@@ -1,11 +1,11 @@
 <?php
 
 use App\Models\User;
+use Database\Seeders\RolePermissonSeeder;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\URL;
 use Laravel\Fortify\Features;
-use Database\Seeders\RolePermissonSeeder;
 
 beforeEach(function () {
     $this->skipUnlessFortifyHas(Features::emailVerification());
