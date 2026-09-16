@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
+        $this->call(SectionSeeder::class);
         $this->call(RolePermissonSeeder::class);
 
         User::factory()->admin()->create([
@@ -34,9 +35,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'emman@example.com',
         ]);
 
-        User::factory()->student()->create([
-            'username' => 'jad',
-            'email' => 'jad@example.com',
-        ]);
+        $this->call(StudentSeeder::class);
     }
 }

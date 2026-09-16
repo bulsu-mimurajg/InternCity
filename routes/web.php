@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'welcome')->name('home');
@@ -17,7 +18,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::inertia('adviser/dashboard', 'adviser/dashboard')->name('AdviserDashboard');
     });
     Route::middleware(['role:student'])->group(function () {
-        Route::inertia('student/dashboard', 'student/dashboard')->name('StudentDashboard');
+        Route::get('student/dashboard', [StudentController::class, 'index'])->name('StudentDashboard');
     });
 });
 
