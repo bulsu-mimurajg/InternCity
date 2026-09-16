@@ -12,9 +12,19 @@ trait PasswordValidationRules
      *
      * @return array<int, Password|ValidationRule|array<mixed>|string>
      */
-    protected function passwordRules(): array
+    protected function defaultPasswordRules(): array
     {
         return ['required', 'string', Password::default()];
+    }
+
+    /**
+     * Get the validation rules used to validate registration passwords.
+     *
+     * @return array<int, Password|ValidationRule|array<mixed>|string>
+     */
+    protected function passwordRegistrationRules(): array
+    {
+        return ['required', 'string', Password::default(), 'confirmed'];
     }
 
     /**
@@ -25,5 +35,15 @@ trait PasswordValidationRules
     protected function currentPasswordRules(): array
     {
         return ['required', 'string', 'current_password'];
+    }
+
+    /**
+     * Get the validation rules used to validate password reset.
+     *
+     * @return array<int, Password|ValidationRule|array<mixed>|string>
+     */
+    protected function resetPasswordRules(): array
+    {
+        return ['required', 'string', Password::default(), 'confirmed'];
     }
 }

@@ -27,7 +27,7 @@ class LoginRequest extends FortifyLoginRequest
     {
         return [
             'username' => ['required', 'string'],
-            'password' => $this->passwordRules(),
+            'password' => $this->defaultPasswordRules(),
         ];
     }
 }

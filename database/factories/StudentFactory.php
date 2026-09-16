@@ -31,7 +31,6 @@ class StudentFactory extends Factory
             'phone' => $this->faker->phoneNumber,
             'section' => Section::inRandomOrder()->value('section_name'),
             'specialization' => $this->faker->randomElement($specialization),
-            'address' => $this->faker->address,
             'is_active' => true,
             'is_submit' => false,
             'is_placed' => false,

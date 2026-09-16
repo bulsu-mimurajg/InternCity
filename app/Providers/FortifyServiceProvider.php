@@ -7,11 +7,9 @@ use App\Actions\Fortify\ResetUserPassword;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Responses\LoginResponse;
 use App\Http\Responses\VerifyEmailResponse;
-use App\Models\User;
+use App\Models\Section;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -28,34 +26,7 @@ class FortifyServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
-    public function register(): void
-    {
-        //        $this->app->instance(LoginResponse::class, new class implements LoginResponse
-        //        {
-        //            public function toResponse($request)
-        //            {
-        //                $user = $request->user();
-        //
-        //                if ($user->hasRole('admin')) {
-        //                    return redirect()->intended(route('AdminDashboard'));
-        //                }
-        //
-        //                if ($user->hasRole('hte')) {
-        //                    return redirect()->intended(route('HteDashboard'));
-        //                }
-        //
-        //                if ($user->hasRole('adviser')) {
-        //                    return redirect()->intended(route('AdviserDashboard'));
-        //                }
-        //
-        //                if ($user->hasRole('student')) {
-        //                    return redirect()->intended(route('StudentDashboard'));
-        //                }
-        //
-        //                return redirect()->route('home');
-        //            }
-        //        });
-    }
+    public function register(): void {}
 
     /**
      * Bootstrap any application services.
@@ -67,26 +38,6 @@ class FortifyServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
         $this->app->singleton(VerifyEmailResponseContract::class, VerifyEmailResponse::class);
         $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
-
-        Fortify::authenticateUsing(function (Request $request) {
-            Log::info('Login attempt', $request->all());
-
-            $user = User::where('username', $request->username)->first();
-
-            if (! $user) {
-                Log::info('User not found');
-
-                return null;
-            }
-
-            if (! Hash::check($request->password, $user->password)) {
-                Log::info('Wrong password');
-
-                return null;
-            }
-
-            return $user;
-        });
 
         $this->app->bind(LoginRequestContract::class, LoginRequest::class);
     }
@@ -126,6 +77,7 @@ class FortifyServiceProvider extends ServiceProvider
 
         Fortify::registerView(fn () => Inertia::render('auth/register', [
             'passwordRules' => Password::defaults()->toPasswordRulesString(),
+            'sections' => Section::where('status', 'active')->get(['section_id', 'section_name']),
         ]));
 
         Fortify::twoFactorChallengeView(fn () => Inertia::render('auth/two-factor-challenge'));
