@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Responses\LoginResponse;
 use App\Http\Responses\VerifyEmailResponse;
 use App\Models\User;
@@ -20,7 +21,7 @@ use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 use Laravel\Fortify\Contracts\VerifyEmailResponse as VerifyEmailResponseContract;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Fortify;
-use Laravel\Fortify\Http\Requests\LoginRequest;
+use Laravel\Fortify\Http\Requests\LoginRequest as LoginRequestContract;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -87,18 +88,7 @@ class FortifyServiceProvider extends ServiceProvider
             return $user;
         });
 
-        $this->app->bind(LoginRequest::class, function ($app) {
-            return new class extends LoginRequest
-            {
-                public function rules()
-                {
-                    return [
-                        'username' => ['required', 'string'],
-                        'password' => ['required', 'string'],
-                    ];
-                }
-            };
-        });
+        $this->app->bind(LoginRequestContract::class, LoginRequest::class);
     }
 
     /**

@@ -11,6 +11,7 @@ class Section extends Model
 {
     /**
      * Get the valid status values
+     * @return array<int, string>
      */
     public static function getValidStatuses(): array
     {
@@ -19,6 +20,7 @@ class Section extends Model
 
     /**
      * Get the students in this section.
+     * @return HasMany<Student, $this>
      */
     public function students(): HasMany
     {
